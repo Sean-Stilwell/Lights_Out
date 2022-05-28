@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Lights_Out_React_Native",
+    "slug": "Lights_Out_React_Native",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "Lights_Out_React_Native"
+}
