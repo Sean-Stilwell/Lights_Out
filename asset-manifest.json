@@ -1,20 +1,20 @@
 {
   "files": {
-    "app.js": "/lights_out_react_native/static/js/app.3d8a4ffe.chunk.js",
-    "app.js.map": "/lights_out_react_native/static/js/app.3d8a4ffe.chunk.js.map",
-    "runtime~app.js": "/lights_out_react_native/static/js/runtime~app.b02303cd.js",
-    "runtime~app.js.map": "/lights_out_react_native/static/js/runtime~app.b02303cd.js.map",
-    "static/js/2.8d90d1f2.chunk.js": "/lights_out_react_native/static/js/2.8d90d1f2.chunk.js",
-    "static/js/2.8d90d1f2.chunk.js.map": "/lights_out_react_native/static/js/2.8d90d1f2.chunk.js.map",
-    "index.html": "/lights_out_react_native/index.html",
-    "manifest.json": "/lights_out_react_native/manifest.json",
-    "serve.json": "/lights_out_react_native/serve.json",
-    "static/js/2.8d90d1f2.chunk.js.LICENSE.txt": "/lights_out_react_native/static/js/2.8d90d1f2.chunk.js.LICENSE.txt",
-    "static/media/LightOff.png": "/lights_out_react_native/static/media/LightOff.a90fc9ae.png",
-    "static/media/LightOn.png": "/lights_out_react_native/static/media/LightOn.fdd77f9b.png"
+    "app.js": "/Lights_Out_React_Native/static/js/app.3d8a4ffe.chunk.js",
+    "app.js.map": "/Lights_Out_React_Native/static/js/app.3d8a4ffe.chunk.js.map",
+    "runtime~app.js": "/Lights_Out_React_Native/static/js/runtime~app.7b4133bf.js",
+    "runtime~app.js.map": "/Lights_Out_React_Native/static/js/runtime~app.7b4133bf.js.map",
+    "static/js/2.8d90d1f2.chunk.js": "/Lights_Out_React_Native/static/js/2.8d90d1f2.chunk.js",
+    "static/js/2.8d90d1f2.chunk.js.map": "/Lights_Out_React_Native/static/js/2.8d90d1f2.chunk.js.map",
+    "index.html": "/Lights_Out_React_Native/index.html",
+    "manifest.json": "/Lights_Out_React_Native/manifest.json",
+    "serve.json": "/Lights_Out_React_Native/serve.json",
+    "static/js/2.8d90d1f2.chunk.js.LICENSE.txt": "/Lights_Out_React_Native/static/js/2.8d90d1f2.chunk.js.LICENSE.txt",
+    "static/media/LightOff.png": "/Lights_Out_React_Native/static/media/LightOff.a90fc9ae.png",
+    "static/media/LightOn.png": "/Lights_Out_React_Native/static/media/LightOn.fdd77f9b.png"
   },
   "entrypoints": [
-    "static/js/runtime~app.b02303cd.js",
+    "static/js/runtime~app.7b4133bf.js",
     "static/js/2.8d90d1f2.chunk.js",
     "static/js/app.3d8a4ffe.chunk.js"
   ]
