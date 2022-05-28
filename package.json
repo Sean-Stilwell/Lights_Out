@@ -1,7 +1,7 @@
 {
   "name": "lights_out_react_native",
   "version": "1.0.0",
-  "homepage": "https://Sean-Stilwell.github.io/lights_out_react_native",
+  "homepage": "http://seanstilwell.ca/Lights_Out/",
   "main": "index.js",
   "scripts": {
     "predeploy": "expo build:web",
