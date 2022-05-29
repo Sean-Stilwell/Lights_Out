@@ -1,12 +1,12 @@
 {
   "expo": {
     "name": "Lights Out!",
+    "icon": "./assets/icon.png",
     "slug": "LightsOut",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]
   },
-  "name": "Lights Out!",
-  "icon": "./assets/LightOn.png"
+  "name": "Lights Out!"
 }
