@@ -15,9 +15,6 @@ export default function Footer(){
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingTop: 20,
-    },
     text: {
         fontSize: 20,
         color: 'white',

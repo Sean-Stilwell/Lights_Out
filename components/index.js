@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { StyleSheet, View, Text, Image, Button, TouchableOpacity } from 'react-native';
 import Cell from './Cell';
 import WinnerModal from './WinnerModal';
+import HelpModal from './HelpModal';
 import { BOARD_HEIGHT, BOARD_WIDTH, CELL_INACTIVE, CELL_OFF, CELL_ON } from './Constants';
 
 export default class Game extends Component {
@@ -14,6 +15,7 @@ export default class Game extends Component {
                 CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF],
         youWon: false,
         moves: 0,
+        help: false,
     };
 
     /**
@@ -103,7 +105,8 @@ export default class Game extends Component {
         this.setState({
             board: board,
             moves: this.state.moves + 1,
-            youWon: this._hasWon()
+            youWon: this._hasWon(),
+            help: false
         });
     }
 
@@ -120,9 +123,9 @@ export default class Game extends Component {
 
         // Set some cells to inactive
         for (let i = 0; i < board.length; i++) {
-            let odds = 0.1;
+            let odds = 0.6;
             if (i % 4 === 0 || i % 4 === 3 || i < BOARD_WIDTH || i > BOARD_HEIGHT * BOARD_WIDTH - BOARD_WIDTH - 1) {
-                odds += 0.1;
+                odds += 0.6;
             }
             board[i] = Math.random() > 0.90 ? CELL_INACTIVE : CELL_OFF;
         }
@@ -138,7 +141,8 @@ export default class Game extends Component {
         this.setState({
             board: board,
             youWon: this._hasWon(),
-            moves: 0
+            moves: 0,
+            help: false
         });
     }
 
@@ -198,9 +202,15 @@ export default class Game extends Component {
             <View style={styles.container}>
                 {this._renderRows()}
                 <WinnerModal visible={this.state.youWon} onPress={() => this._randomize()}/>
-                <TouchableOpacity style={styles.button} onPress={() => this._randomize()}>
-                    <Text style={styles.button_text}>New Game</Text>
-                </TouchableOpacity>
+                <HelpModal visible={this.state.help} onPress={() => this.setState({help: false})}/>
+                <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity style={styles.button} onPress={() => this._randomize()}>
+                        <Text style={styles.button_text}>New Game</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={() => this.setState({help: true})}>
+                        <Text style={styles.button_text}>Help</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -212,12 +222,12 @@ const styles = StyleSheet.create({
       width: '100%',
     },
     button: {
-        marginTop: 10,
+        margin: 10,
         height: 40,
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
-        width: 140,
+        width: 120,
         backgroundColor: '#ffA812',
     },
     container: {

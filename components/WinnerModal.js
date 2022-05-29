@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "black",
         fontWeight: "bold",
-        textAlign: "center"
+        textAlign: "center",
     },
     modalText: {
         color: "white",
