@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react';
 import { StyleSheet, View, Text, Image, Button, TouchableOpacity } from 'react-native';
 import Cell from './Cell';
 import WinnerModal from './WinnerModal';
-import { BOARD_HEIGHT, BOARD_WIDTH, CELL_OFF, CELL_ON } from './Constants';
+import { BOARD_HEIGHT, BOARD_WIDTH, CELL_INACTIVE, CELL_OFF, CELL_ON } from './Constants';
 
 export default class Game extends Component {
 
@@ -16,6 +16,10 @@ export default class Game extends Component {
         moves: 0,
     };
 
+    /**
+     * Used to initialize the state of the game.
+     * @param {*} props 
+     */
     constructor(props){
         super(props);
 
@@ -24,37 +28,76 @@ export default class Game extends Component {
     }
 
     /**
-     * [0,  1,  2,  3]
-     * [4,  5,  6,  7]
-     * [8,  9,  10, 11]
-     * [12, 13, 14, 15]
-     * [16, 17, 18, 19]
+     * Code that runs when a tile is pressed. This function is passed to the
+     * Cell component as a prop. It is called by the Cell component when the
+     * user taps a cell, passing the index of the cell that was tapped. We use
+     * this index to update the state of the game.
      * @param {int} index The index of the cell that was clicked
      */
     _clickTile(index){
         const board = this.state.board;
 
+        if (board[index] === CELL_INACTIVE) {
+            return
+        }
+
         // Toggle the value of the cell
         board[index] = board[index] === CELL_OFF ? CELL_ON : CELL_OFF;
 
         // Toggle the cell above the clicked cell
-        if (index >= 4) {
-            board[index - 4] = board[index - 4] === CELL_OFF ? CELL_ON : CELL_OFF;
+        if (index >= BOARD_WIDTH) {
+            switch (board[index - BOARD_WIDTH]) {
+                case CELL_OFF:
+                    board[index - BOARD_WIDTH] = CELL_ON;
+                    break;
+                case CELL_ON:
+                    board[index - BOARD_WIDTH] = CELL_OFF;
+                    break;
+                case CELL_INACTIVE:
+                    break;
+            }
         }
 
         // Toggle the cell below the clicked cell
-        if (index <= 15) {
-            board[index + 4] = board[index + 4] === CELL_OFF ? CELL_ON : CELL_OFF;
+        if (index <= BOARD_HEIGHT * BOARD_WIDTH - BOARD_WIDTH - 1) {
+            switch (board[index + BOARD_WIDTH]) {
+                case CELL_OFF:
+                    board[index + BOARD_WIDTH] = CELL_ON;
+                    break;
+                case CELL_ON:
+                    board[index + BOARD_WIDTH] = CELL_OFF;
+                    break;
+                case CELL_INACTIVE:
+                    break;
+            }
         }
 
         // Toggle the cell to the left of the clicked cell
         if (index % 4 !== 0) {
-            board[index - 1] = board[index - 1] === CELL_OFF ? CELL_ON : CELL_OFF;
+            switch (board[index - 1]) {
+                case CELL_OFF:
+                    board[index - 1] = CELL_ON;
+                    break;
+                case CELL_ON:
+                    board[index - 1] = CELL_OFF;
+                    break;
+                case CELL_INACTIVE:
+                    break;
+            }
         }
 
         // Toggle the cell to the right of the clicked cell
         if (index % 4 !== 3) {
-            board[index + 1] = board[index + 1] === CELL_OFF ? CELL_ON : CELL_OFF;
+            switch (board[index + 1]) {
+                case CELL_OFF:
+                    board[index + 1] = CELL_ON;
+                    break;
+                case CELL_ON:
+                    board[index + 1] = CELL_OFF;
+                    break;
+                case CELL_INACTIVE:
+                    break;
+            }
         }
 
         this.setState({
@@ -64,14 +107,34 @@ export default class Game extends Component {
         });
     }
 
+    /**
+     * Randomizes the state of the game. Begins by setting some cells to inactive.
+     * If not inactive, a cell starts off.
+     * 
+     * After the active cells are set, the game is randomized by randomly clicking
+     * cells. This ensures there is always a winning path, as those cells can simply
+     * be unclicked to make the game win.
+     */
     _randomize(){
         let board = this.state.board;
+
+        // Set some cells to inactive
+        for (let i = 0; i < board.length; i++) {
+            let odds = 0.1;
+            if (i % 4 === 0 || i % 4 === 3 || i < BOARD_WIDTH || i > BOARD_HEIGHT * BOARD_WIDTH - BOARD_WIDTH - 1) {
+                odds += 0.1;
+            }
+            board[i] = Math.random() > 0.90 ? CELL_INACTIVE : CELL_OFF;
+        }
+
+        // Randomly click cells to randomize the game
         for (let i = 0; i < board.length; i++) {
             if (Math.random() > 0.4) {
                 this._clickTile(i);
             }
         }
 
+        // Update the state of the game
         this.setState({
             board: board,
             youWon: this._hasWon(),
@@ -79,6 +142,10 @@ export default class Game extends Component {
         });
     }
 
+    /**
+     * Returns true if the game has been won.
+     * @returns {boolean} True if the game has been won, false otherwise.
+     */
     _hasWon(){
         for (let i = 0; i < this.state.board.length; i++) {
             if (this.state.board[i] === CELL_ON) {
@@ -89,6 +156,10 @@ export default class Game extends Component {
         return true;
     }
     
+    /**
+     * Used to render the rows of the game board.
+     * @returns {array} An array of rows. Each row is an array of cells.
+     */
     _renderRows() {
         const rows = [];
 
@@ -103,6 +174,11 @@ export default class Game extends Component {
         return rows;
     }
 
+    /**
+     * Used to render an individual row of the game board.
+     * @param {int} rowIndex The index of the row to render.
+     * @returns The row of cells at the given index.
+     */
     _renderRow(rowIndex) {
         const cells = [];
         for (let i = 0; i < BOARD_WIDTH; ++i) {
@@ -113,6 +189,10 @@ export default class Game extends Component {
         return cells;
     }
 
+    /**
+     * Used to render the game.
+     * @returns {<View>} The game board, winning screen, and the button to start a new game.
+     */
     render() {
         return (
             <View style={styles.container}>

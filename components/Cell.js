@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-import { CELL_OFF, CELL_ON } from './Constants';
+import { CELL_OFF, CELL_ON, CELL_INACTIVE } from './Constants';
 
 export default class Cell extends Component {
     constructor(props){
@@ -15,7 +15,6 @@ export default class Cell extends Component {
                         source={require('../assets/LightOff.png')}
                         style={styles.image}
                     />
-                    {/* <Text>{this.props.index}</Text> */}
                 </TouchableOpacity>
             case CELL_ON:
                 return <TouchableOpacity onPress={this._handlePress.bind(this)}>
@@ -23,8 +22,12 @@ export default class Cell extends Component {
                         source={require('../assets/LightOn.png')} 
                         style={styles.image}
                     />
-                    {/* <Text>{this.props.index}</Text> */}
                 </TouchableOpacity>
+            case CELL_INACTIVE:
+                return <Image
+                        source={require('../assets/LightInactive.png')} 
+                        style={styles.image}
+                    />
         }
     }
 
