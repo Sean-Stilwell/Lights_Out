@@ -1,5 +1,12 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, View, Text, Image, Button, TouchableOpacity } from 'react-native';
+
+// Font Awesome Imports
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons/faCircleQuestion';
+import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo';
+
+// Local Imports
 import Cell from './Cell';
 import WinnerModal from './WinnerModal';
 import HelpModal from './HelpModal';
@@ -8,6 +15,11 @@ import { BOARD_HEIGHT, BOARD_WIDTH, CELL_INACTIVE, CELL_OFF, CELL_ON } from './C
 export default class Game extends Component {
 
     state = { 
+        startingBoard: [CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF, 
+                CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF,
+                CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF,
+                CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF,
+                CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF],
         board: [CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF, 
                 CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF,
                 CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF,
@@ -24,9 +36,14 @@ export default class Game extends Component {
      */
     constructor(props){
         super(props);
-
         this._clickTile = this._clickTile.bind(this);
+    }
+
+    componentDidMount(){
         this._randomize();
+        // this.setState({
+        //     startingBoard: this.state.board,
+        // });
     }
 
     /**
@@ -137,10 +154,22 @@ export default class Game extends Component {
             }
         }
 
+        let startingBoard = [...board];
+
         // Update the state of the game
         this.setState({
+            startingBoard: startingBoard,
             board: board,
             youWon: this._hasWon(),
+            moves: 0,
+            help: false
+        }, () => {});
+    }
+
+    _restart(){
+        this.setState({
+            board: [...this.state.startingBoard],
+            youWon: false,
             moves: 0,
             help: false
         });
@@ -201,14 +230,17 @@ export default class Game extends Component {
         return (
             <View style={styles.container}>
                 {this._renderRows()}
-                <WinnerModal visible={this.state.youWon} onPress={() => this._randomize()}/>
+                <WinnerModal visible={this.state.youWon} onPressNewGame={() => this._randomize()} onPressRetry={() => this._restart()} moves={this.state.moves}/>
                 <HelpModal visible={this.state.help} onPress={() => this.setState({help: false})}/>
                 <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity style={styles.button_icon} onPress={() => this._restart()}>
+                        <FontAwesomeIcon icon={faUndo} size={20} />
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => this._randomize()}>
                         <Text style={styles.button_text}>New Game</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => this.setState({help: true})}>
-                        <Text style={styles.button_text}>Help</Text>
+                    <TouchableOpacity style={styles.button_icon} onPress={() => this.setState({help: true})}>
+                        <FontAwesomeIcon icon={faCircleQuestion} size={20} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -228,6 +260,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignItems: 'center',
         width: 120,
+        backgroundColor: '#ffA812',
+    },
+    button_icon: {
+        margin: 10,
+        height: 40,
+        justifyContent: 'center',
+        textAlign: 'center',
+        alignItems: 'center',
+        width: 40,
         backgroundColor: '#ffA812',
     },
     container: {

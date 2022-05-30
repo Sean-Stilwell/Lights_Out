@@ -14,10 +14,15 @@ export default class WinnerModal extends Component {
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>You won!</Text>
-                        <Pressable style={styles.button} onPress={this.props.onPress}>
-                            <Text style={styles.buttonText}>Play again?</Text>
-                        </Pressable>
+                        <Text style={styles.modalText}>You won in {this.props.moves} moves!</Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <Pressable style={styles.button} onPress={this.props.onPressRetry}>
+                                <Text style={styles.buttonText}>Retry</Text>
+                            </Pressable>
+                            <Pressable style={styles.button} onPress={this.props.onPressNewGame}>
+                                <Text style={styles.buttonText}>New Game</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
             </Modal>
@@ -43,7 +48,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     button: {
-        marginTop: 20,
+        margin: 10,
         padding: 10,
         backgroundColor: "#ffA812",
     },
@@ -57,5 +62,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         fontSize: 30
+    },
+    modalContent: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 20,
+        paddingTop: 15
     }
 });
