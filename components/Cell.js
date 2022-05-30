@@ -1,11 +1,13 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { CELL_OFF, CELL_ON, CELL_INACTIVE } from './Constants';
 
 export default class Cell extends Component {
+
     constructor(props){
         super(props);
     }
+
 
     _renderCell(){
         switch(this.props.value){
@@ -31,9 +33,11 @@ export default class Cell extends Component {
         }
     }
 
+
     _handlePress(){ 
         this.props.onPress(this.props.index);
     }
+
 
     render() {
         return (
@@ -43,6 +47,7 @@ export default class Cell extends Component {
         );
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {

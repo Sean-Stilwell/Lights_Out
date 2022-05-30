@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Linking } from "react-native";
+import { Modal, StyleSheet, Text, TouchableOpacity, View, Linking } from "react-native";
 
 export default class WinnerModal extends Component {
 
@@ -19,12 +19,12 @@ export default class WinnerModal extends Component {
                         <Text style={styles.modalContent}>Whenever you click a cell, the cells beside it will also swap between "On" and "Off".</Text>
                         <Text style={styles.modalContent}>The game is over when all the cells are "Off".</Text>
                         <View style={{flexDirection: 'row'}}>
-                            <Pressable style={styles.button} onPress={() => Linking.openURL('https://github.com/Sean-Stilwell/Lights_Out/issues')}>
+                            <TouchableOpacity style={styles.button} onPress={() => Linking.openURL('https://github.com/Sean-Stilwell/Lights_Out/issues')}>
                                 <Text style={styles.buttonText}>Report Issue</Text>
-                            </Pressable> 
-                            <Pressable style={styles.button} onPress={this.props.onPress}>
+                            </TouchableOpacity> 
+                            <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
                                 <Text style={styles.buttonText}>Close</Text>
-                            </Pressable>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
         color: "white",
         textAlign: "center",
         fontSize: 20,
-        paddingTop: 15,
-        width: 400
+        paddingTop: 15
     }
 });

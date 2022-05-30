@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default class WinnerModal extends Component {
 
@@ -16,12 +16,12 @@ export default class WinnerModal extends Component {
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>You won in {this.props.moves} moves!</Text>
                         <View style={{flexDirection: 'row'}}>
-                            <Pressable style={styles.button} onPress={this.props.onPressRetry}>
+                            <TouchableOpacity style={styles.button} onPress={this.props.onPressRetry}>
                                 <Text style={styles.buttonText}>Retry</Text>
-                            </Pressable>
-                            <Pressable style={styles.button} onPress={this.props.onPressNewGame}>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button} onPress={this.props.onPressNewGame}>
                                 <Text style={styles.buttonText}>New Game</Text>
-                            </Pressable>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>

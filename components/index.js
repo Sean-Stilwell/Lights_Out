@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, Image, Button, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 // Font Awesome Imports
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -10,6 +10,7 @@ import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo';
 import Cell from './Cell';
 import WinnerModal from './WinnerModal';
 import HelpModal from './HelpModal';
+import { encodeBoard, decodeBoard } from '../scripts/board_coding';
 import { BOARD_HEIGHT, BOARD_WIDTH, CELL_INACTIVE, CELL_OFF, CELL_ON } from './Constants';
 
 export default class Game extends Component {
@@ -25,10 +26,12 @@ export default class Game extends Component {
                 CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF,
                 CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF,
                 CELL_OFF, CELL_OFF, CELL_OFF, CELL_OFF],
+        encoded: "0000000000",
         youWon: false,
         moves: 0,
         help: false,
     };
+
 
     /**
      * Used to initialize the state of the game.
@@ -39,12 +42,14 @@ export default class Game extends Component {
         this._clickTile = this._clickTile.bind(this);
     }
 
+
+    /**
+     * Randomize the board immediately when the page loads.
+     */
     componentDidMount(){
         this._randomize();
-        // this.setState({
-        //     startingBoard: this.state.board,
-        // });
     }
+
 
     /**
      * Code that runs when a tile is pressed. This function is passed to the
@@ -56,6 +61,7 @@ export default class Game extends Component {
     _clickTile(index){
         const board = this.state.board;
 
+        // If the cell is inactive, do nothing
         if (board[index] === CELL_INACTIVE) {
             return
         }
@@ -72,8 +78,6 @@ export default class Game extends Component {
                 case CELL_ON:
                     board[index - BOARD_WIDTH] = CELL_OFF;
                     break;
-                case CELL_INACTIVE:
-                    break;
             }
         }
 
@@ -85,8 +89,6 @@ export default class Game extends Component {
                     break;
                 case CELL_ON:
                     board[index + BOARD_WIDTH] = CELL_OFF;
-                    break;
-                case CELL_INACTIVE:
                     break;
             }
         }
@@ -100,8 +102,6 @@ export default class Game extends Component {
                 case CELL_ON:
                     board[index - 1] = CELL_OFF;
                     break;
-                case CELL_INACTIVE:
-                    break;
             }
         }
 
@@ -114,8 +114,6 @@ export default class Game extends Component {
                 case CELL_ON:
                     board[index + 1] = CELL_OFF;
                     break;
-                case CELL_INACTIVE:
-                    break;
             }
         }
 
@@ -126,6 +124,7 @@ export default class Game extends Component {
             help: false
         });
     }
+
 
     /**
      * Randomizes the state of the game. Begins by setting some cells to inactive.
@@ -154,18 +153,25 @@ export default class Game extends Component {
             }
         }
 
+        // Update the starting and encoded boards to match the new game.
         let startingBoard = [...board];
+        let encodedBoard = encodeBoard(startingBoard);
 
         // Update the state of the game
         this.setState({
             startingBoard: startingBoard,
             board: board,
+            encoded: encodedBoard,
             youWon: this._hasWon(),
             moves: 0,
             help: false
         }, () => {});
     }
 
+
+    /**
+     * Restores the game to the starting state. Allows the user to start over.
+     */
     _restart(){
         this.setState({
             board: [...this.state.startingBoard],
@@ -174,6 +180,7 @@ export default class Game extends Component {
             help: false
         });
     }
+
 
     /**
      * Returns true if the game has been won.
@@ -185,9 +192,9 @@ export default class Game extends Component {
                 return false;
             }
         }
-        console.log("You won!");
         return true;
     }
+   
     
     /**
      * Used to render the rows of the game board.
@@ -207,6 +214,7 @@ export default class Game extends Component {
         return rows;
     }
 
+
     /**
      * Used to render an individual row of the game board.
      * @param {int} rowIndex The index of the row to render.
@@ -221,6 +229,7 @@ export default class Game extends Component {
         }
         return cells;
     }
+
 
     /**
      * Used to render the game.
@@ -247,6 +256,7 @@ export default class Game extends Component {
         );
     }
 }
+
 
 const styles = StyleSheet.create({
     row: {
