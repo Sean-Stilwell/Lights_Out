@@ -111,7 +111,11 @@ function decode(val){
     }
 
     for (let i = 0; i < encoded.length; i += 1){
-        if (parseInt(encoded[i]) > 8 || parseInt(encoded[i]) < 0){
+        let value = parseInt(encoded[i]);
+        if (isNaN(value)){
+            return false;
+        }
+        if (value > 8 || value < 0){
             return false;
         }
     }

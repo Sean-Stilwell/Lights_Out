@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Linking } from 'react-native';
 
 // Font Awesome Imports
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons/faCircleQuestion';
 import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo';
+import { faShareFromSquare } from '@fortawesome/free-solid-svg-icons/faShareFromSquare'
+// import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 
 // Local Imports
 import Cell from './Cell';
+import ShareLoadModal from './ShareLoadModal';
 import WinnerModal from './WinnerModal';
 import HelpModal from './HelpModal';
-import { encodeBoard, decodeBoard } from '../scripts/board_coding';
+import { encodeBoard, decodeBoard, codeIsValid } from '../scripts/board_coding';
 import { BOARD_HEIGHT, BOARD_WIDTH, CELL_INACTIVE, CELL_OFF, CELL_ON } from './Constants';
 
 export default class Game extends Component {
@@ -30,6 +33,7 @@ export default class Game extends Component {
         youWon: false,
         moves: 0,
         help: false,
+        share: false,
     };
 
 
@@ -40,6 +44,7 @@ export default class Game extends Component {
     constructor(props){
         super(props);
         this._clickTile = this._clickTile.bind(this);
+        this._loadGame = this._loadGame.bind(this);
     }
 
 
@@ -121,7 +126,8 @@ export default class Game extends Component {
             board: board,
             moves: this.state.moves + 1,
             youWon: this._hasWon(),
-            help: false
+            help: false,
+            share: false
         });
     }
 
@@ -159,12 +165,13 @@ export default class Game extends Component {
 
         // Update the state of the game
         this.setState({
-            startingBoard: startingBoard,
             board: board,
+            startingBoard: startingBoard,
             encoded: encodedBoard,
-            youWon: this._hasWon(),
             moves: 0,
-            help: false
+            youWon: this._hasWon(),
+            help: false,
+            share: false
         }, () => {});
     }
 
@@ -175,10 +182,28 @@ export default class Game extends Component {
     _restart(){
         this.setState({
             board: [...this.state.startingBoard],
-            youWon: false,
             moves: 0,
+            youWon: false,
             help: false
         });
+    }
+
+    _loadGame(encoded){
+        if (codeIsValid(encoded)) {
+            let board = decodeBoard(encoded);
+            this.setState({
+                board: [...board],
+                startingBoard: [...board],
+                encoded: encoded,
+                moves: 0,
+                youWon: false,
+                help: false,
+                share: false,
+            });
+        }
+        else {
+            alert("Invalid code");
+        }
     }
 
 
@@ -239,18 +264,25 @@ export default class Game extends Component {
         return (
             <View style={styles.container}>
                 {this._renderRows()}
-                <WinnerModal visible={this.state.youWon} onPressNewGame={() => this._randomize()} onPressRetry={() => this._restart()} moves={this.state.moves}/>
+                <WinnerModal visible={this.state.youWon} onPressNewGame={() => this._randomize()} onPressRetry={() => this._restart()} moves={this.state.moves} encoded={this.state.encoded}/>
                 <HelpModal visible={this.state.help} onPress={() => this.setState({help: false})}/>
+                <ShareLoadModal visible={this.state.share} onPress={() => this.setState({share: false})} encoded={this.state.encoded} loader={this._loadGame}/>
                 <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity style={styles.button_icon} onPress={() => this.setState({help: true})}>
+                        <FontAwesomeIcon icon={faCircleQuestion} size={20} />
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.button_icon} onPress={() => this._restart()}>
                         <FontAwesomeIcon icon={faUndo} size={20} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => this._randomize()}>
                         <Text style={styles.button_text}>New Game</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button_icon} onPress={() => this.setState({help: true})}>
-                        <FontAwesomeIcon icon={faCircleQuestion} size={20} />
+                    <TouchableOpacity style={styles.button_icon} onPress={() => this.setState({share: true})}>
+                        <FontAwesomeIcon icon={faShareFromSquare} size={20} />
                     </TouchableOpacity>
+                    {/* <TouchableOpacity style={styles.button_icon} onPress={() => Linking.openURL('https://github.com/Sean-Stilwell/Lights_Out/')}>
+                        <FontAwesomeIcon icon={faGithub} size={20} />
+                    </TouchableOpacity> */}
                 </View>
             </View>
         );
