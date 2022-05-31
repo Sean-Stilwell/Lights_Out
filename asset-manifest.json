@@ -1,25 +1,25 @@
 {
   "files": {
-    "app.js": "/Lights_Out/static/js/app.74079265.chunk.js",
-    "app.js.map": "/Lights_Out/static/js/app.74079265.chunk.js.map",
+    "app.js": "/Lights_Out/static/js/app.826613b5.chunk.js",
+    "app.js.map": "/Lights_Out/static/js/app.826613b5.chunk.js.map",
     "runtime~app.js": "/Lights_Out/static/js/runtime~app.747ae95f.js",
     "runtime~app.js.map": "/Lights_Out/static/js/runtime~app.747ae95f.js.map",
-    "static/js/2.06e91b55.chunk.js": "/Lights_Out/static/js/2.06e91b55.chunk.js",
-    "static/js/2.06e91b55.chunk.js.map": "/Lights_Out/static/js/2.06e91b55.chunk.js.map",
+    "static/js/2.b1d87859.chunk.js": "/Lights_Out/static/js/2.b1d87859.chunk.js",
+    "static/js/2.b1d87859.chunk.js.map": "/Lights_Out/static/js/2.b1d87859.chunk.js.map",
     "favicon-16.png": "/Lights_Out/favicon-16.png",
     "favicon-32.png": "/Lights_Out/favicon-32.png",
     "favicon.ico": "/Lights_Out/favicon.ico",
     "index.html": "/Lights_Out/index.html",
     "manifest.json": "/Lights_Out/manifest.json",
     "serve.json": "/Lights_Out/serve.json",
-    "static/js/2.06e91b55.chunk.js.LICENSE.txt": "/Lights_Out/static/js/2.06e91b55.chunk.js.LICENSE.txt",
+    "static/js/2.b1d87859.chunk.js.LICENSE.txt": "/Lights_Out/static/js/2.b1d87859.chunk.js.LICENSE.txt",
     "static/media/LightInactive.png": "/Lights_Out/static/media/LightInactive.e799a455.png",
     "static/media/LightOff.png": "/Lights_Out/static/media/LightOff.faa22160.png",
     "static/media/LightOn.png": "/Lights_Out/static/media/LightOn.5e01bec4.png"
   },
   "entrypoints": [
     "static/js/runtime~app.747ae95f.js",
-    "static/js/2.06e91b55.chunk.js",
-    "static/js/app.74079265.chunk.js"
+    "static/js/2.b1d87859.chunk.js",
+    "static/js/app.826613b5.chunk.js"
   ]
 }
