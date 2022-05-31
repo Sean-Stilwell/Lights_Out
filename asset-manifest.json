@@ -1,7 +1,7 @@
 {
   "files": {
-    "app.js": "/Lights_Out/static/js/app.826613b5.chunk.js",
-    "app.js.map": "/Lights_Out/static/js/app.826613b5.chunk.js.map",
+    "app.js": "/Lights_Out/static/js/app.60707dd1.chunk.js",
+    "app.js.map": "/Lights_Out/static/js/app.60707dd1.chunk.js.map",
     "runtime~app.js": "/Lights_Out/static/js/runtime~app.747ae95f.js",
     "runtime~app.js.map": "/Lights_Out/static/js/runtime~app.747ae95f.js.map",
     "static/js/2.b1d87859.chunk.js": "/Lights_Out/static/js/2.b1d87859.chunk.js",
@@ -20,6 +20,6 @@
   "entrypoints": [
     "static/js/runtime~app.747ae95f.js",
     "static/js/2.b1d87859.chunk.js",
-    "static/js/app.826613b5.chunk.js"
+    "static/js/app.60707dd1.chunk.js"
   ]
 }
