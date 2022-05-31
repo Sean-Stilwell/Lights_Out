@@ -30,7 +30,7 @@ export default class WinnerModal extends Component {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>You won in {this.props.moves} moves!</Text>
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                             <TouchableOpacity style={styles.button} onPress={this.props.onPressRetry}>
                                 <View style={{flexDirection: 'row'}}>
                                     <FontAwesomeIcon icon={faUndo} size={20} />
@@ -66,14 +66,16 @@ const styles = StyleSheet.create({
     },
     modalView: {
         padding: 20,
-        paddingLeft: 40,
-        paddingRight: 40,
+        paddingLeft: 30,
+        paddingRight: 30,
         margin: 20,
         backgroundColor: "#1F1F1F",
+        justifyContent: "center",
         alignItems: "center"
     },
     button: {
-        margin: 20,
+        margin: 5,
+        marginTop: 10,
         padding: 10,
         height: 40,
         backgroundColor: "#ffA812",
@@ -88,11 +90,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         fontSize: 30
-    },
-    modalContent: {
-        color: "white",
-        textAlign: "center",
-        fontSize: 20,
-        paddingTop: 15
     }
 });
